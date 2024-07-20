@@ -1,3 +1,3 @@
 # test-merge-commits
 
-Change 2
+Change 3
