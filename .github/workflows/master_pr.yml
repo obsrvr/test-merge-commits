@@ -13,6 +13,10 @@ jobs:
         uses: actions/checkout@v4 
       - name: Check
         run: |
-          gh api /repos/obsrvr/test-merge-commits/commits/${{ github.event.pull_request.head.sha }}/check-runs | jq '.check_runs[] | select(.name=="develop-build") | .conclusion'
+          status=$(gh api /repos/obsrvr/test-merge-commits/commits/${{ github.event.pull_request.head.sha }}/check-runs | jq -r '.check_runs[] | select(.name=="develop-build") | .conclusion')
+          if ($status != "success") {
+            echo status is wrong - $status
+            exit 1
+          }
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
