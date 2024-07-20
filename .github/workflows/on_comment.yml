@@ -1,0 +1,16 @@
+name: pull request comment
+on:
+  issue_comment:
+    types: [created, edited, deleted]
+
+permissions: 
+  contents: write
+
+jobs:
+  rebase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: rebase
+        if: contains(github.event.comment.body, '/rebase') 
+        run: |
+          echo ${{ github.event.pull_request.head.sha }}
