@@ -1,16 +1,16 @@
-name: pull request comment
+name: pull request approved
 on:
-  issue_comment:
-    types: [created]
+  pull_request_review:
+    types: [submitted]
 
-permissions: 
+permissions:
   contents: write
 
 jobs:
   rebase:
     runs-on: ubuntu-latest
+    if: github.event.review.state == 'approved'
     steps:
       - name: rebase
-        if: contains(github.event.comment.body, '/rebase')
         run: |
           echo ${{ github.event.pull_request.head.sha }}
