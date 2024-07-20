@@ -6,7 +6,7 @@ on:
 permissions: 
   contents: read
 jobs:
-  test:
+  verify-statuses:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

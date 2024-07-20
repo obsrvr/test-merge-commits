@@ -1,10 +1,10 @@
-name: develop-build
+name: develop build
 on:
   push:
     branches:
       - develop
 jobs:
-  test:
+  develop-build:
     runs-on: ubuntu-latest
     steps:
       - name: Check
