@@ -14,7 +14,7 @@ jobs:
       - name: Check
         run: |
           status=$(gh api /repos/obsrvr/test-merge-commits/commits/${{ github.event.pull_request.head.sha }}/check-runs | jq -r '.check_runs[] | select(.name=="develop-build") | .conclusion')
-          if $status != "success"; then
+          if [ $status != "success" ]; then
             echo status is wrong - $status
             exit 1
           fi
