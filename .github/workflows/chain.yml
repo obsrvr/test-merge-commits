@@ -1,0 +1,14 @@
+name: chain
+on:
+  push:
+    branches: ["master"]
+
+permissions: 
+  contents: write
+jobs:
+  verify-statuses:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check
+        run: |
+          echo test

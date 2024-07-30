@@ -1,0 +1,17 @@
+name: crun
+on:
+  workflow_run:
+    branches: [master]
+    workflows: [chain]
+    types:
+        - completed
+
+permissions: 
+  contents: write
+jobs:
+  verify-statuses:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check
+        run: |
+          echo test
