@@ -10,8 +10,15 @@ jobs:
   rebase:
     if: github.event.issue.pull_request
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4 
       - name: rebase
         if: contains(github.event.comment.body, '/rebase')
         run: |
           echo I hear you!
+          echo ${{ github.event.issue.number }}
+          gh pr comment ${{ github.event.issue.number }} --body "This PR will be automatically merged!"
+
