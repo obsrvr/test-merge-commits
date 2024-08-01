@@ -8,9 +8,10 @@ permissions:
 
 jobs:
   rebase:
+    if: github.event.issue.pull_request
     runs-on: ubuntu-latest
     steps:
       - name: rebase
         if: contains(github.event.comment.body, '/rebase')
         run: |
-          echo ${{ github.event.pull_request.head.sha }}
+          echo I hear you!
