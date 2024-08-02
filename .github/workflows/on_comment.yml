@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: master
-          fetch-depth: 100
+          fetch-depth: 0
       - name: rebase
         if: contains(github.event.comment.body, '/rebase')
         run: |
@@ -24,6 +24,7 @@ jobs:
           echo ${{ github.event.issue.number }}
           gh pr comment ${{ github.event.issue.number }} --body "This PR will be automatically merged!"
           COMMIT_REF=$(gh pr view ${{ github.event.issue.number }} --json headRefOid -q ".headRefOid")
+          git checkout ${COMMIT_REF}
           git checkout master
           git rebase ${COMMIT_REF}
           git push origin master
