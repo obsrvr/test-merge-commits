@@ -13,11 +13,18 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4 
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          # fetch-depth: 0
       - name: rebase
         if: contains(github.event.comment.body, '/rebase')
         run: |
           echo I hear you!
           echo ${{ github.event.issue.number }}
           gh pr comment ${{ github.event.issue.number }} --body "This PR will be automatically merged!"
+          COMMIT_REF=$(gh pr view ${{ github.event.issue.number }} --json headRefOid -q ".headRefOid")
+          git checkout master
+          git rebase ${COMMIT_REF}
+          git push origin master
 
