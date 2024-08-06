@@ -4,7 +4,8 @@ on:
     branches: ["master"]
     types: [opened, reopened]
 
-permissions: write-all
+permissions:
+    pull-requests: write
 jobs:
   verify-statuses:
     runs-on: ubuntu-latest
