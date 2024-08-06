@@ -4,8 +4,7 @@ on:
     branches: ["master"]
     types: [opened, reopened]
 
-permissions: 
-  contents: write
+permissions: write-all
 jobs:
   verify-statuses:
     runs-on: ubuntu-latest
@@ -18,6 +17,6 @@ jobs:
         run: |
             {
                 echo "# Instructions"
-                echo "* To merge this pull request type `/rebase`"
+                echo "* To merge this pull request type \`/rebase\`"
             } > instructions.txt
             gh pr comment ${{ github.event.pull_request.number  }} --body "$(cat instructions.txt)"
