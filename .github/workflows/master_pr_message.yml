@@ -1,0 +1,23 @@
+name: verify-statuses
+on:
+  pull_request:
+    branches: ["master"]
+    types: [opened, reopened]
+
+permissions: 
+  contents: write
+jobs:
+  verify-statuses:
+    runs-on: ubuntu-latest
+    env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4 
+      - name: Write about rebase
+        run: |
+            {
+                echo "# Instructions"
+                echo "* To merge this pull request type `/rebase`"
+            } > instructions.txt
+            gh pr comment ${{ github.event.pull_request.number  }} --body "$(cat instructions.txt)"
