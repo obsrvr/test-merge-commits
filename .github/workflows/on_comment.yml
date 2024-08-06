@@ -2,10 +2,26 @@ name: pull request comment
 on:
   issue_comment:
     types: [created]
+  pull_request:
+    branches: ["master"]
+    types: [opened, reopened]
 
 permissions: write-all
 
 jobs:
+  message:
+    if: github.event.pull_request
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Write about rebase
+        run: |
+            {
+                echo "# Instructions"
+                echo "* To merge this pull request type \`/rebase\`"
+            } > instructions.txt
+            gh pr comment ${{ github.event.pull_request.number  }} --body "$(cat instructions.txt)"
   rebase:
     if: github.event.issue.pull_request
     runs-on: ubuntu-latest
